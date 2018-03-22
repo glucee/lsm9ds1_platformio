@@ -3,6 +3,10 @@ lsm9ds1 library used in platformio, the library is highly inspired by Spark_LSM9
 
 You can use:
 
-Make to compile
-and 
-Make upload to upload to your device
+make (all): to compile the firmware
+
+make upload: to upload to your device
+
+make clean: clean the project
+
+make update: to update all the libraries
