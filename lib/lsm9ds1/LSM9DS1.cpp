@@ -53,6 +53,7 @@ Distributed as-is; no warranty is given.
 // included BEFORE including the 9DS1 library.
 #include <Wire.h>
 #include <SparkFunLSM9DS1.h>
+#include "LSM9DS1.h"
 
 //////////////////////////
 // LSM9DS1 Library Init //
@@ -268,5 +269,52 @@ void printAttitude()
   Serial.print(pitch);
   Serial.print(" ");
   Serial.println(roll);
+}
+//Get the yaw, roll and pitch from LSM9DS1 Chip
+LSM9DS1_DATA getAttitude()
+{
+  float ax = imu.ax;
+  float ay = imu.ay;
+  float az = imu.az;
+  float mx = -imu.my;
+  float my = -imu.mx;
+  float mz = imu.mz;
+
+  float roll = atan2(ay, az);
+  float pitch = atan2(-ax, sqrt(ay * ay + az * az));
+  
+  float heading;
+  if (my == 0)
+    heading = (mx < 0) ? PI : 0;
+  else
+    heading = atan2(mx, my);
+    
+  heading -= DECLINATION * PI / 180;
+  
+  if (heading > PI) heading -= (2 * PI);
+  else if (heading < -PI) heading += (2 * PI);
+  else if (heading < 0) heading += 2 * PI;
+  
+  // Convert everything from radians to degrees:
+  heading *= 180.0 / PI;
+  pitch *= 180.0 / PI;
+  roll  *= 180.0 / PI;
+
+  LSM9DS1_DATA result;
+  result.yaw = heading;
+  result.pitch = pitch;
+  result.roll = roll;
+
+  return result;
+
+  /*
+  Serial.print(millis());
+  Serial.print(" - Orientation: ");
+  Serial.print(heading);
+  Serial.print(" ");
+  Serial.print(pitch);
+  Serial.print(" ");
+  Serial.println(roll);
   delay(20);
+  */
 }
