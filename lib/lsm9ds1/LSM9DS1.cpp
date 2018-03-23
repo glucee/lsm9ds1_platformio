@@ -83,6 +83,9 @@ static unsigned long lastPrint = 0; // Keep track of print time
 // http://www.ngdc.noaa.gov/geomag-web/#declination
 #define DECLINATION -8.58 // Declination (degrees) in Boulder, CO.
 
+//store the initial attitude
+LSM9DS1_DATA init_attitude;
+
 bool setup_lsm9ds1()
 {
   // Before initializing the IMU, there are a few settings
@@ -104,6 +107,11 @@ bool setup_lsm9ds1()
                   "if the board jumpers are.");
     while (1);
   }
+ 
+  delay(100);
+  update_lsm9ds1();
+  init_attitude = getAttitude();
+
   return true;
 
 }
@@ -317,4 +325,21 @@ LSM9DS1_DATA getAttitude()
   Serial.println(roll);
   delay(20);
   */
+}
+
+// get LSM9DS1_DATA based on the reference 
+LSM9DS1_DATA getAttitude_offset()
+{
+    LSM9DS1_DATA data = getAttitude();
+    data.yaw -= init_attitude.yaw;
+    data.roll -= init_attitude.roll;
+    data.pitch -= init_attitude.pitch;
+    return data;
+}
+
+//set LSM9DS1 reference data
+bool setAttitude_ref(LSM9DS1_DATA ref_data)
+{
+    init_attitude = ref_data;
+    return true;
 }
