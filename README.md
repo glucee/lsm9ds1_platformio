@@ -22,19 +22,28 @@ make update: to update all the libraries
 
 ***API function***
 
-//setup LSM9DS1, if the device is not setup successfully, it will enter forever loop bool setup_lsm9ds1();
+//setup LSM9DS1, if the device is not setup successfully, it will enter forever loop 
+bool setup_lsm9ds1();
 
 //option functions:
 
-//print the yaw, roll and pitch (degrees) from LSM9DS1 void print_lsm9ds1();
+//print the yaw, roll and pitch (degrees) from LSM9DS1 
+void print_lsm9ds1();
 
-//get the yaw, roll and pitch (degrees) from LSM9DS1 LSM9DS1_DATA get_lsm9ds1();
+//get the yaw, roll and pitch (degrees) from LSM9DS1 
+LSM9DS1_DATA get_lsm9ds1();
 
-//get the yaw, roll and pitch (degrees) based on the reference (if set) or initial value LSM9DS1_DATA get_lsm9ds1_offset();
+//get the yaw, roll and pitch (degrees) based on the reference (if set) or initial value 
+LSM9DS1_DATA get_lsm9ds1_offset();
 
-//set the yaw, roll and pitch (degrees) reference bool set_lsm9ds1_ref(LSM9DS1_DATA ref_data);
+//set the yaw, roll and pitch (degrees) reference 
+bool set_lsm9ds1_ref(LSM9DS1_DATA ref_data);
 
-typedef struct { float yaw; float roll; float pitch; } LSM9DS1_DATA; //measured by degrees
+typedef struct { 
+	float yaw; 
+	float roll; 
+	float pitch; 
+} LSM9DS1_DATA; //measured by degrees
 
 ***LICENSE***
 
