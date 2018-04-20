@@ -45,9 +45,13 @@ LSM9DS1_DATA get_lsm9ds1_offset();
 bool set_lsm9ds1_ref(LSM9DS1_DATA ref_data);
 
 typedef struct { 
+
 	float yaw; 
+
 	float roll; 
+
 	float pitch; 
+
 } LSM9DS1_DATA; //measured by degrees
 
 ***LICENSE***
