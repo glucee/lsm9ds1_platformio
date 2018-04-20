@@ -9,13 +9,12 @@ void setup()
 
 void loop()
 {
-    update_lsm9ds1();
-    LSM9DS1_DATA data = getAttitude();
+    LSM9DS1_DATA data = get_lsm9ds1();
     Serial.print(data.yaw);
     Serial.print(" ");
     Serial.print(data.roll); 
     Serial.print(" ");
     Serial.println(data.pitch);
-    delay(50);
+    delay(20);
 }
 
